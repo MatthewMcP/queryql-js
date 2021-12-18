@@ -1,8 +1,10 @@
 import React from 'react';
+import MattHeader from './components/MattHeader';
 
 function App() {
     return (
         <div>
+            <MattHeader />
             <header>
                 <p>
                     Edit <code>src/App.js</code> and save to reload.
