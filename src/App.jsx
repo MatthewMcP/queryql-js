@@ -1,5 +1,6 @@
 import React from 'react';
 import MattHeader from './components/MattHeader';
+import QueryQL from './pages/queryQL';
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
                     Learn React
                 </a>
             </header>
+            <QueryQL />
         </div>
     );
 }
