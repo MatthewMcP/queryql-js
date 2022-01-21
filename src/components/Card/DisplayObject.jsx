@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import useModal from '../useModal';
+import React from 'react';
+// import useModal from '../useModal';
 import { trimAndCapitalize } from '../../utils';
 
 const DisplayObject = ({ object }) => {
@@ -11,23 +11,23 @@ const DisplayObject = ({ object }) => {
 };
 
 const DisplayValue = ({ propertyName = '', propertyValue }) => {
-    const [modalTitle, setModalTitle] = useState('');
-    const [modalData, setModalData] = useState([]);
-    const [toggleModal, jsxModal] = useModal(modalTitle, modalData);
+    // const [modalTitle, setModalTitle] = useState('');
+    // const [modalData, setModalData] = useState([]);
+    // const [toggleModal, jsxModal] = useModal(modalTitle, modalData);
 
     if (!!propertyValue && propertyValue.constructor === Object) {
         return <DisplayObject object={propertyValue} />;
     }
 
-    const handleArrayClick = (modalName, selectedArrayData) => {
-        setModalTitle(modalName);
-        setModalData(selectedArrayData);
-        toggleModal();
+    const handleArrayClick = () => {
+        // setModalTitle(modalName);
+        // setModalData(selectedArrayData);
+        // toggleModal();
     };
     if (Array.isArray(propertyValue)) {
         return (
             <>
-                {jsxModal()}
+                {/* {jsxModal()} */}
                 <span className='w-auto m-2'>
                     {trimAndCapitalize(propertyName)}
                     {': '}

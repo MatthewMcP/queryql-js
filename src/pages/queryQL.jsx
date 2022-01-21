@@ -11,7 +11,6 @@ import 'react-toastify/dist/ReactToastify.css';
 // const TinyUrl = require('tinyurl');
 
 const QueryQL = () => {
-    console.log('QueryQL: ');
     const defaultQueryString = `{
     countries {
       name
@@ -49,7 +48,6 @@ const QueryQL = () => {
         setURIText(target.value);
     };
     const apolloClient = useMemo(() => {
-        // onSetURIValue(debouncedURIText);
         return new ApolloClient({
             uri: debouncedURIText,
         });

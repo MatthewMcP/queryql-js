@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 // import { Card } from '../index';
 import { trimAndCapitalize } from '../../utils';
 
-const useModal = (title, data) => {
+const useModal = (title) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const toggleModal = () => {

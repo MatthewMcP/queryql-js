@@ -13,19 +13,15 @@ const getQueryStringValue = (key, queryString = window.location.search) => {
     const values = qs.parse(queryString);
     if (values[key]) {
         const stringValue = values[key];
-        console.log('stringValue: ', stringValue);
         const unencodedValue = Base64.decode(stringValue);
-        console.log('unencodedValue: ', unencodedValue);
         try {
             const decompressedVal = pako.inflate(unencodedValue, { to: 'string' });
-            console.log('decompressedVal: ', decompressedVal);
             return decompressedVal;
         } catch (err) {
             console.log('err: ', err);
             console.log(err);
         }
         const decompressedVal = pako.inflate(unencodedValue, { to: 'string' });
-        console.log('decompressedVal: ', decompressedVal);
         return decompressedVal;
     }
     return '';
