@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import useModal from '../useModal';
+import React from 'react';
+import { Box, Table, TableBody, TableCell, TableHead, TableRow, TableContainer } from '@mui/material';
+
+// import useModal from '../useModal';
 import { trimAndCapitalize } from '../../utils';
 
 const TableDisplay = ({ data }) => {
@@ -8,79 +10,80 @@ const TableDisplay = ({ data }) => {
         jsxTableHeader = Object.keys(data[0])
             .filter((key) => !key.startsWith('_'))
             .map((key) => (
-                <th key={key + data[key]} className='box-border border-2 px-2 break-all'>
+                <TableCell key={key + data[key]} style={{ fontWeight: 600 }}>
                     {trimAndCapitalize(key)}
-                </th>
+                </TableCell>
             ));
     }
 
-    const [modalTitle, setModalTitle] = useState('');
-    const [modalData, setModalData] = useState([]);
-    const [toggleModal, jsxModal] = useModal(modalTitle, modalData);
+    // const [modalTitle, setModalTitle] = useState('');
+    // const [modalData, setModalData] = useState([]);
+    // const [toggleModal, jsxModal] = useModal(modalTitle, modalData);
 
-    const handleArrayClick = (modalName, selectedArrayData) => {
-        setModalTitle(modalName);
-        setModalData(selectedArrayData);
-        toggleModal();
-    };
+    // const handleArrayClick = () => {
+    //     // setModalTitle(modalName);
+    //     // setModalData(selectedArrayData);
+    //     // toggleModal();
+    // };
 
     return (
-        <div>
-            {jsxModal()}
-            {data ? (
-                <>
-                    <table className='table-fixed overflow-x-auto'>
-                        <thead>
-                            <tr>{jsxTableHeader}</tr>
-                        </thead>
-                        <tbody className='text-center'>
-                            {data.map((singleData, index) => {
-                                const jsxTableCells = Object.keys(singleData)
-                                    .filter((key) => !key.startsWith('_'))
-                                    .map((key) => {
-                                        if (Array.isArray(singleData[key])) {
-                                            return (
-                                                <td
-                                                    // eslint-disable-next-line react/no-array-index-key
-                                                    key={index + key}
-                                                    className='box-border border-2 sm:px-2 break-all'>
-                                                    <button
+        <Box sx={{ marginY: 4 }}>
+            <TableContainer>
+                {/* {jsxModal()} */}
+                {data ? (
+                    <>
+                        <Table border='1'>
+                            <TableHead>
+                                <TableRow>{jsxTableHeader}</TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {data.map((singleData, index) => {
+                                    const jsxTableCells = Object.keys(singleData)
+                                        .filter((key) => !key.startsWith('_'))
+                                        .map((key) => {
+                                            if (Array.isArray(singleData[key])) {
+                                                return (
+                                                    <TableCell
+                                                        // eslint-disable-next-line react/no-array-index-key
+                                                        key={index + key}>
+                                                        {/* <button
                                                         onClick={() => {
                                                             handleArrayClick(key, singleData[key]);
                                                         }}
-                                                        type='button'
-                                                        className='no-underline hover:underline text-blue-500 text-lg'>
+                                                        type='button'>
                                                         {trimAndCapitalize(singleData[key].length.toString())}
-                                                    </button>
-                                                </td>
+                                                    </button> */}
+                                                    </TableCell>
+                                                );
+                                            }
+                                            let cellText = singleData[key];
+
+                                            if (!cellText) {
+                                                cellText = 'No Data';
+                                            }
+                                            if (cellText.constructor === Object) {
+                                                cellText = 'Object Data';
+                                            }
+                                            return (
+                                                <TableCell
+                                                    // eslint-disable-next-line react/no-array-index-key
+                                                    key={index + key}>
+                                                    {cellText}
+                                                    {/* {trimAndCapitalize(cellText)} */}
+                                                </TableCell>
                                             );
-                                        }
-                                        let cellText = singleData[key];
-                                        if (!cellText) {
-                                            cellText = 'No Data';
-                                        }
-                                        if (cellText.constructor === Object) {
-                                            cellText = 'Object Data';
-                                        }
-                                        return (
-                                            <td
-                                                // eslint-disable-next-line react/no-array-index-key
-                                                key={index + key}
-                                                className='box-border border-2 sm:px-2 break-all'>
-                                                {trimAndCapitalize(cellText)}
-                                            </td>
-                                        );
-                                    });
-                                // eslint-disable-next-line react/no-array-index-key
-                                return <tr key={index}>{jsxTableCells}</tr>;
-                            })}
-                        </tbody>
-                    </table>
-                </>
-            ) : (
-                <span>Nodata present</span>
-            )}
-        </div>
+                                        });
+                                    // eslint-disable-next-line react/no-array-index-key
+                                    return <tr key={index}>{jsxTableCells}</tr>;
+                                })}
+                            </TableBody>
+                        </Table>
+                    </>
+                ) : (
+                    <span>Nodata present</span>
+                )}
+            </TableContainer>
+        </Box>
     );
 };
 export default TableDisplay;

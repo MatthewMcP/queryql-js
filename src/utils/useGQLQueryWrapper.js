@@ -1,48 +1,56 @@
 import { useMemo } from 'react';
-import ApolloClient, { gql } from 'apollo-boost';
-import { useQuery } from '@apollo/react-hooks';
+
+import { ApolloClient, useLazyQuery, gql, InMemoryCache } from '@apollo/client';
 
 import { QueryStateEnum } from './useAxiosWrapper';
 
-const useGQLQueryWrapper = ({ url, query }) => {
+const useGQLQueryWrapper = ({ url = '', query }) => {
+    const cache = new InMemoryCache();
+
     const apolloClient = useMemo(
-        () =>
-            // eslint-disable-next-line implicit-arrow-linebreak
-            new ApolloClient({
-                uri: 'https://countries.trevorblades.com/',
-            }),
+        () => {
+            if (url) {
+                return new ApolloClient({
+                    cache,
+                    uri: url,
+                });
+            }
+
+            return null;
+        },
         // eslint-disable-next-line comma-dangle
         [url]
     );
 
-    const defaultQueryString = `{
-    countries {
-      name
-      native
-      capital
-      phone
-      emoji
-      currency
-      languages {
-        code
-        name
-      }
-    }
-  }`;
+    //                uri:'https://countries.trevorblades.com/',
+    //     const defaultQueryString = `{
+    //     countries {
+    //       name
+    //       native
+    //       capital
+    //       phone
+    //       emoji
+    //       currency
+    //       languages {
+    //         code
+    //         name
+    //       }
+    //     }
+    //   }`;
 
-    const { error, data } = useQuery(gql(defaultQueryString || query), {
+    const [runQuery, { error, data }] = useLazyQuery(gql(query), {
         client: apolloClient,
     });
 
     if (error) {
-        return [{ status: QueryStateEnum.errored, data: undefined, error }];
+        return [runQuery, { status: QueryStateEnum.errored, data: undefined, error }];
     }
 
     if (data) {
-        return [{ status: QueryStateEnum.resolved, data, error: null }];
+        return [runQuery, { status: QueryStateEnum.resolved, data, error: null }];
     }
 
-    return [{ status: QueryStateEnum.loading, data: undefined, error: null }];
+    return [runQuery, { status: QueryStateEnum.loading, data: undefined, error: null }];
 };
 
 export default useGQLQueryWrapper;

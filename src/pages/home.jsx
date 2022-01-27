@@ -18,11 +18,15 @@ const Home = () => {
             Home
             {/*
             https://reqres.in/api/users/1?delay=2
-           TODO: Integrate graphQL
-           TODO: show query type on previous
+            TODO Test with more REST API
+            TODO: Handle graphQL running on change and causing error
+            TODO: Handle previous searches not re-rendering
+            TODO: Handle error + loading display
+           TODO: Handling data.data or data.countries
+           TODO: Add Modals
             TODO: ESLINT IGNORE comments
            TODO: Warning about headers not saved
-           TODO: Styling
+            TODO: query string but only on initial
            TODO: Run Query Button + auto run toggle */}
             <pre>{JSON.stringify(data, null, 2)}</pre>
         </div>

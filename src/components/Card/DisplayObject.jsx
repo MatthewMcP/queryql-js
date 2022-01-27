@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box, Typography } from '@mui/material';
 // import useModal from '../useModal';
 import { trimAndCapitalize } from '../../utils';
 
@@ -15,7 +16,7 @@ const DisplayValue = ({ propertyName = '', propertyValue }) => {
     // const [modalData, setModalData] = useState([]);
     // const [toggleModal, jsxModal] = useModal(modalTitle, modalData);
 
-    if (!!propertyValue && propertyValue.constructor === Object) {
+    if (!!propertyValue && typeof propertyValue === 'object') {
         return <DisplayObject object={propertyValue} />;
     }
 
@@ -24,22 +25,24 @@ const DisplayValue = ({ propertyName = '', propertyValue }) => {
         // setModalData(selectedArrayData);
         // toggleModal();
     };
+
     if (Array.isArray(propertyValue)) {
         return (
             <>
                 {/* {jsxModal()} */}
-                <span className='w-auto m-2'>
-                    {trimAndCapitalize(propertyName)}
-                    {': '}
+                <Box component='span' margin={1}>
+                    <Typography style={{ fontWeight: 600 }}>
+                        {trimAndCapitalize(propertyName)}
+                        {': '}
+                    </Typography>
                     <button
                         onClick={() => {
                             handleArrayClick(propertyName, propertyValue);
                         }}
-                        type='button'
-                        className='no-underline hover:underline text-blue-500 text-lg'>
+                        type='button'>
                         {propertyValue.length.toString()}
                     </button>
-                </span>
+                </Box>
             </>
         );
     }
@@ -55,11 +58,13 @@ const DisplayValue = ({ propertyName = '', propertyValue }) => {
     }
 
     return (
-        <span className='w-auto m-2'>
-            {trimAndCapitalize(propertyName)}
-            {': '}
+        <Box component='span' margin={1}>
+            <Typography style={{ display: 'inline', fontWeight: 600 }}>
+                {trimAndCapitalize(propertyName)}
+                {': '}
+            </Typography>
             {propertyValueText}
-        </span>
+        </Box>
     );
 };
 

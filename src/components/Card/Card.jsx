@@ -1,22 +1,35 @@
 import React from 'react';
+import { Box, Card, CardContent, Stack } from '@mui/material';
+
 import { DisplayObject } from './DisplayObject';
 
 const CardDisplay = ({ data }) => (
-    <div className='container mx-auto'>
+    <Stack marginY={4} alignItems='center'>
         {data ? (
             <>
                 {data.map((singleData, index) => (
-                    <div
+                    <Card
                         // eslint-disable-next-line react/no-array-index-key
-                        key={index}
-                        className='container mx-auto text-white border-2 border-white m-2 rounded flex flex-wrap'>
-                        <DisplayObject object={singleData} />
-                    </div>
+                        key={index}>
+                        <CardContent>
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    flexWrap: 'wrap',
+                                    p: 1,
+                                    m: 1,
+                                    bgcolor: 'lightBlue',
+                                    borderRadius: 1,
+                                }}>
+                                <DisplayObject object={singleData} />
+                            </Box>
+                        </CardContent>
+                    </Card>
                 ))}
             </>
         ) : (
             <span>Nodata present</span>
         )}
-    </div>
+    </Stack>
 );
 export default CardDisplay;
